@@ -1,0 +1,384 @@
+html {
+  overflow: hidden;
+}
+div,
+body {
+  padding: 0;
+  margin: 0;
+}
+ul {
+  list-style: none;
+  margin-left: 0;
+}
+li {
+  list-style: none;
+  margin-left: 0;
+  color: rgba(243, 239, 247);
+}
+.cesium-widget-credits {
+  display: none !important;
+}
+* {
+  box-sizing: border-box;
+}
+#app,
+#cesiumContainer {
+  width: 100vw;
+  height: 100vh;
+}
+
+#showcontroller {
+  z-index: 1;
+  position: absolute;
+  right: 0rem;
+  top: 10%;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+}
+
+#hidecontroller {
+  z-index: 1;
+  position: absolute;
+  right: 160px;
+  top: 10%;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  animation: moveUp 1s forwards;
+  /* forwards属性会保持动画状态不回到初始状态 */
+}
+@keyframes moveUp {
+  0% {
+    /* 定义动画开始的状态 */
+    transform: translateX(200px);
+  }
+  100% {
+    /* 定义动画结束的状态 */
+    transform: translateX(0);
+  }
+}
+
+#controller {
+  z-index: 1;
+  position: absolute;
+  right: 0rem;
+  top: 10%;
+  display: flex;
+  gap: 0px;
+  flex-direction: column;
+  animation: moveUp 1s forwards;
+  /* forwards属性会保持动画状态不回到初始状态 */
+}
+@keyframes moveUp {
+  0% {
+    /* 定义动画开始的状态 */
+    transform: translateX(200px);
+  }
+  100% {
+    /* 定义动画结束的状态 */
+    transform: translateX(0);
+  }
+}
+
+#overlay-controller {
+  /* z-index: 1; */
+  /* position: absolute; */
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+}
+
+#div_1 {
+  user-select: all;
+  z-index: 1;
+  color: white;
+  position: absolute;
+  right: 1rem;
+  bottom: 2.2rem;
+}
+#div_2 {
+  z-index: 1;
+  color: white;
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+}
+
+#button_style {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 160px;
+}
+
+#button_style1 {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 80px;
+}
+
+#button_style2 {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 30px;
+}
+#button_style3 {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 53.333px;
+}
+
+#button_style4 {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+}
+#button_style5 {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 80px;
+}
+#button_style6 {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 40px;
+}
+
+#showcontroller1 {
+  z-index: 1;
+  position: absolute;
+  right: 0rem;
+  top: 55%;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+}
+
+#hidecontroller1 {
+  z-index: 1;
+  position: absolute;
+  right: 480px;
+  top: 55%;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  animation: moveUp 2s forwards;
+  /* forwards属性会保持动画状态不回到初始状态 */
+}
+@keyframes moveUp {
+  0% {
+    /* 定义动画开始的状态 */
+    transform: translateX(500px);
+  }
+  100% {
+    /* 定义动画结束的状态 */
+    transform: translateX(0);
+  }
+}
+
+#showcontroller2 {
+  z-index: 1;
+  position: absolute;
+  right: 0rem;
+  top: 75%;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+}
+
+#hidecontroller2 {
+  z-index: 1;
+  position: absolute;
+  right: 480px;
+  top: 75%;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  animation: moveUp 2s forwards;
+  /* forwards属性会保持动画状态不回到初始状态 */
+}
+@keyframes moveUp {
+  0% {
+    /* 定义动画开始的状态 */
+    transform: translateX(500px);
+  }
+  100% {
+    /* 定义动画结束的状态 */
+    transform: translateX(0);
+  }
+}
+
+#data_style {
+  z-index: 1;
+  background-color: rgba(30, 30, 30, 0.5);
+  position: absolute;
+  right: 0rem;
+  width: 480px;
+  top: 55%;
+  display: flex;
+  gap: 0px;
+  flex-direction: column;
+  animation: moveUp 2s forwards;
+  /* forwards属性会保持动画状态不回到初始状态 */
+}
+@keyframes moveUp {
+  0% {
+    /* 定义动画开始的状态 */
+    transform: translateX(500px);
+  }
+  100% {
+    /* 定义动画结束的状态 */
+    transform: translateX(0);
+  }
+}
+
+#local_style {
+  z-index: 1;
+  background-color: rgba(30, 30, 30, 0.5);
+  position: absolute;
+  right: 0rem;
+  width: 480px;
+  top: 75%;
+  display: flex;
+  gap: 0px;
+  flex-direction: column;
+  animation: moveUp 2s forwards;
+  /* forwards属性会保持动画状态不回到初始状态 */
+}
+@keyframes moveUp {
+  0% {
+    /* 定义动画开始的状态 */
+    transform: translateX(500px);
+  }
+  100% {
+    /* 定义动画结束的状态 */
+    transform: translateX(0);
+  }
+}
+
+#name {
+  background-color: rgba(30, 30, 30, 0);
+  width: 120px;
+  color: rgba(243, 239, 247);
+  border: 0;
+}
+
+#name1 {
+  background-color: rgba(30, 30, 30, 0);
+  width: 200px;
+  color: rgba(243, 239, 247);
+  border: 0;
+}
+
+#name2 {
+  background-color: rgba(30, 30, 30, 0);
+  width: 100px;
+  color: rgba(243, 239, 247);
+  border: 0;
+}
+#name3 {
+  background-color: rgba(30, 30, 30, 0);
+  width: 100px;
+  color: rgba(243, 239, 247);
+  border: 0;
+}
+
+#record_button {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 80px;
+}
+#save_button {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 80px;
+}
+
+#confirm_button {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 80px;
+}
+
+#button_style_icon {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 130px;
+  border-right: none;
+}
+#button_style_icon1 {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 30px;
+  border-left: none;
+}
+#button_style_icon2 {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 30px;
+  border-left: none;
+}
+#button_style_icon3 {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 30px;
+  border-left: none;
+}
+#button_style_icon4 {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 30px;
+  border-left: none;
+}
+#button_style_icon5 {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 30px;
+  border-left: none;
+}
+
+#button_style_icon6 {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 130px;
+  border-right: none;
+}
+
+#button_style_icon7 {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 130px;
+  border-right: none;
+}
+
+#span1 {
+  margin-left: 28px;
+}
+
+#span2 {
+  font-size: 10px;
+}
+
+#radar_del {
+  background-color: rgba(30, 30, 30, 0.5);
+  color: rgba(243, 239, 247);
+  height: 30px;
+  width: 40px;
+  font-size: 10px;
+}

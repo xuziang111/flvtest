@@ -1,0 +1,93 @@
+[
+  {
+    "type": "EventCarMove",
+    "id": "mockCar1",
+    "position": [114.3960833155645, 30.442085972420593, 1000],
+    "time": 1693546547783,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar1",
+    "position": [114.39600374161706, 30.442293367118296, 1000],
+    "time": 1693546549894,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar1",
+    "position": [114.39592416766963, 30.442500761816, 8],
+    "time": 1693546551851,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar1",
+    "position": [114.39584459372222, 30.442708156513707, 8],
+    "time": 1693546553812,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar1",
+    "position": [114.39565949505455, 30.442815836461264, 8],
+    "time": 1693546555821,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar1",
+    "position": [114.39549512770449, 30.44283433410753, 1000],
+    "time": 1693546557821,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar1",
+    "position": [114.39526369199362, 30.44267421965213, 9],
+    "time": 1693546559815,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar1",
+    "position": [114.39503225628276, 30.44251410519674, 1000],
+    "time": 1693546561819,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar1",
+    "position": [114.39526369199362, 30.44267421965213, 9],
+    "time": 1693546563819,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar1",
+    "position": [114.39549512770449, 30.44283433410753, 1000],
+    "time": 1693546565820,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar1",
+    "position": [114.39565949505455, 30.442815836461264, 8],
+    "time": 1693546567821,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar1",
+    "position": [114.39584459372222, 30.442708156513707, 8],
+    "time": 1693546569811,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar1",
+    "position": [114.39592416766963, 30.442500761816, 8],
+    "time": 1693546571816,
+    "speed": 0
+  }
+]

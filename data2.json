@@ -1,0 +1,58 @@
+[
+  {
+    "type": "EventCarMove",
+    "id": "mockCar2",
+    "position": [114.39589858051114, 30.443065140923014, 0],
+    "time": 1693546408484,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar2",
+    "position": [114.39578791800578, 30.44298645344896, 0],
+    "time": 1693546410514,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar2",
+    "position": [114.39572109775642, 30.443052186512226, 0],
+    "time": 1693546412521,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar2",
+    "position": [114.39582633672971, 30.44312712326879, 0],
+    "time": 1693546414512,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar2",
+    "position": [114.39589858051114, 30.443065140923014, 0],
+    "time": 1693546416514,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar2",
+    "position": [114.39578791800578, 30.44298645344896, 0],
+    "time": 1693546418519,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar2",
+    "position": [114.39572109775642, 30.443052186512226, 0],
+    "time": 1693546420516,
+    "speed": 20
+  },
+  {
+    "type": "EventCarMove",
+    "id": "mockCar2",
+    "position": [114.39582633672971, 30.44312712326879, 0],
+    "time": 1693546422518,
+    "speed": 0
+  }
+]

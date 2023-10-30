@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npx --no -- commitlint --edit $1
+
+if [ $? -ne 0 ]; then
+  echo "请填写规范的 commit message\n 参考 CONTRIBUTING.MD"
+  exit 1
+fi

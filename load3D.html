@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- this is an archived file -->
+    <meta charset="UTF-8" />
+    <title>Cesium load3D</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./Cesium/Widgets/widgets.css"
+    />
+    <script type="text/javascript" src="./Cesium/Cesium.js"></script>
+    <style>
+      div,
+      body {
+        padding: 0;
+        margin: 0;
+      }
+      .cesium-widget-credits {
+        display: none !important;
+      }
+      #cesiumcontainer {
+        width: 100vw;
+        height: 100vh;
+      }
+      #controller {
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+      }
+      #div_1 {
+        color: white;
+        position: absolute;
+        left: 0;
+        bottom: 1.2rem;
+      }
+      #div_2 {
+        color: white;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cesiumcontainer"></div>
+    <div id="controller">
+      <button type="button" value="设置1" onclick="show1()">设置点</button>
+      <button type="button" value="设置2" onclick="show2()">设置图</button>
+      <button type="button" value="设置3" onclick="show3()">设置车</button>
+      <button type="button" value="设置4" onclick="show4()">设置波纹</button>
+      <button type="button" value="设置5" onclick="show5()">设置动点</button>
+      <button type="button" value="运动" onclick="move1()">车辆运动</button>
+      <button type="button" value="清除" onclick="delete1()">清除实体</button>
+    </div>
+    <script type="text/javascript">
+      var lon = 114.39577820915972;
+      var lat = 30.443080724951518;
+      let pathRecord = [];
+
+      //webview2 transmition test
+      if (window.chrome.webview) {
+        window.chrome.webview.addEventListener("message", (arg) => {
+          alert(arg);
+          console.log(arg);
+        });
+        function postMessage() {
+          window.chrome.webview.postMessage("hello");
+          window.chrome.webview.postMessage("{tester: true}");
+        }
+        postMessage();
+      } else {
+        console.error("window.chrome.webview is not defined");
+      }
+
+      //子域
+      // var subdomains = ["0", "1", "2", "3", "4", "5", "6", "7"];
+      // var tiandituTk = "49b5dedd7b46d989cfb72f1d5a31331c";
+
+      //添加token
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJjNzY1ODY1YS04YzYxLTQ2NTAtODg0ZS05MDZlY2M3M2ExMTciLCJpZCI6MTM0ODQ0LCJpYXQiOjE2ODIwNDgxMzZ9.juOJhj7bsAs5GY9xcyGO41eviCwwft0sh_m5ykh_ipw";
+      var viewer = new Cesium.Viewer("cesiumcontainer", {
+        //搜索框
+        geocoder: false,
+        //home键
+        homeButton: false,
+        // 动画控件
+        animation: false,
+        //全屏按钮
+        fullscreenButton: false,
+        //场景模式选择器
+        sceneModePicker: false,
+        //时间轴
+        timeline: false,
+        //导航提示
+        navigationHelpButton: false,
+        //地图选择器
+        baseLayerPicker: false,
+        shouldAnimate: true,
+      });
+      const tileset = viewer.scene.primitives.add(
+        new Cesium.Cesium3DTileset({
+          url: Cesium.IonResource.fromAssetId(1667756), // Cesium ION assets
+        })
+      );
+      viewer.zoomTo(tileset, new Cesium.HeadingPitchRange(0, -0.7, 300));
+
+      var dataSource = new Cesium.CustomDataSource("enetiestestdata");
+      viewer.dataSources.add(dataSource);
+      var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas); //鼠标事件
+      handler.setInputAction(function (movement) {
+        var ray = this.viewer.camera.getPickRay(movement.position); //
+        if (!ray) return null;
+        var position = this.viewer.scene.globe.pick(ray, this.viewer.scene); //转化为世界坐标（笛卡尔坐标系）
+        console.log(movement.position); //屏幕坐标
+        console.log(position); //世界坐标
+        var cartographic =
+          Cesium.Ellipsoid.WGS84.cartesianToCartographic(position); //世界坐标转为弧度坐标
+        console.log(cartographic);
+        lon = Cesium.Math.toDegrees(cartographic.longitude); //弧度转经度
+        lat = Cesium.Math.toDegrees(cartographic.latitude); //经纬度转弧度
+        // pathRecord.push([lon, lat, 1]); // 记录点击位置坐标
+        console.log(lon, lat);
+        document.getElementById("div_1").innerHTML = lon;
+        document.getElementById("div_2").innerHTML = lat;
+      }, Cesium.ScreenSpaceEventType.LEFT_CLICK); //左击触发
+
+      // Remove default base layer
+      viewer.imageryLayers.remove(viewer.imageryLayers.get(0));
+      // Add Sentinel-2 imagery from ION assets
+      viewer.imageryLayers.addImageryProvider(
+        new Cesium.IonImageryProvider({ assetId: 3954 })
+      );
+      // Load Cesium World Terrain
+      viewer.terrainProvider = Cesium.createWorldTerrain({
+        requestWaterMask: false, // required for water effects
+        requestVertexNormals: false, // required for terrain lighting
+      });
+      // Enable lighting based on sun/moon positions
+      viewer.scene.globe.enableLighting = true;
+
+      function show1() {
+        dataSource.entities.remove(dataSource.entities.getById("pointtest1"));
+        var pointentity = dataSource.entities.add({
+          id: "pointtest1",
+          position: Cesium.Cartesian3.fromDegrees(lon, lat, 10),
+          point: {
+            pixelSize: 10,
+            color: Cesium.Color.YELLOW,
+            outlineColor: Cesium.Color.RED,
+            outlineWidth: 2,
+          },
+        });
+      }
+
+      function show2() {
+        dataSource.entities.remove(dataSource.entities.getById("pointtest2"));
+        var pointentity = dataSource.entities.add({
+          id: "pointtest2",
+          position: Cesium.Cartesian3.fromDegrees(lon, lat, 0),
+          billboard: {
+            image: "./assets/tag.png",
+            scale: 0.5,
+            pixelOffset: new Cesium.Cartesian2(0, -120),
+            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+            clampToGround: true, //是否贴地
+          },
+        });
+      }
+
+      function show3() {
+        dataSource.entities.remove(dataSource.entities.getById("pointtest3"));
+        var pointentity = dataSource.entities.add({
+          id: "pointtest3",
+          position: Cesium.Cartesian3.fromDegrees(lon, lat, 8),
+          model: {
+            uri: "./assets/car.gltf",
+            scale: 1,
+            minimumPixelSize: 70,
+          },
+        });
+      }
+
+      function show4() {
+        /**
+         * 圆扩散构造方法
+         * @param  {Object}  dataSource  Cesium.CustomDataSource
+         * @param  {Object}  data    配置项
+         */
+        const addCircleRipple = function (dataSource, data) {
+          var r1 = data.minR;
+          // 通过 entities.getById()方法找到要操作的实体
+          // 移除上一次的波纹效果
+          if (dataSource.entities.getById(data.id)) {
+            dataSource.entities.remove(dataSource.entities.getById(data.id));
+          }
+          function changeR1() {
+            //这是callback，参数不能内传
+            r1 = r1 + data.deviationR;
+            if (r1 >= data.maxR) {
+              r1 = data.minR;
+            }
+            return r1;
+          }
+          dataSource.entities.add({
+            id: data.id,
+            name: "",
+            position: Cesium.Cartesian3.fromDegrees(
+              data.lon,
+              data.lat,
+              data.height
+            ),
+            ellipse: {
+              semiMinorAxis: new Cesium.CallbackProperty(changeR1, false),
+              semiMajorAxis: new Cesium.CallbackProperty(changeR1, false),
+              height: data.height,
+              material: new Cesium.ImageMaterialProperty({
+                image: data.imageUrl,
+                repeat: new Cesium.Cartesian2(1.0, 1.0),
+                transparent: true,
+                color: new Cesium.CallbackProperty(function () {
+                  var alp = 1 - r1 / data.maxR;
+                  return Cesium.Color.RED.withAlpha(alp); //entity的颜色透明 并不影响材质，并且entity也会透明
+                }, false),
+              }),
+            },
+          });
+        };
+        let data = {
+          id: "circleRipple", // 圆弧效果的实体id
+          lon: lon * 1,
+          lat: lat * 1,
+          height: 10, // 因为是3d地图，地图上的实体会有高度属性，可以设置实体的高度
+          maxR: 40, // 圆弧的最大半径
+          minR: 0, // 最好为0
+          deviationR: 0.33, // 差值 差值大 速度快
+          imageUrl: "/assets/circle.png",
+        };
+        addCircleRipple(dataSource, data);
+      }
+
+      function show5() {
+        dataSource.entities.remove(dataSource.entities.getById("pointtest5"));
+        // change to pulse point
+        var start = new Cesium.JulianDate();
+        var mid = Cesium.JulianDate.addSeconds(
+          start,
+          0.5,
+          new Cesium.JulianDate()
+        );
+        var stop = Cesium.JulianDate.addSeconds(
+          start,
+          1,
+          new Cesium.JulianDate()
+        );
+
+        viewer.clock.startTime = start;
+        viewer.clock.currentTime = start;
+        viewer.clock.stopTime = stop;
+        viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
+
+        var pulseProperty = new Cesium.SampledProperty(Number);
+        pulseProperty.setInterpolationOptions({
+          interpolationDegree: 3,
+          interpolationAlgorithm: Cesium.HermitePolynomialApproximation,
+        });
+
+        pulseProperty.addSample(start, 7.0);
+        pulseProperty.addSample(mid, 15.0);
+        pulseProperty.addSample(stop, 7.0);
+
+        var pointentity = dataSource.entities.add({
+          id: "pointtest5",
+          position: Cesium.Cartesian3.fromDegrees(lon, lat, 10),
+          point: {
+            pixelSize: pulseProperty,
+            color: Cesium.Color.LIME,
+          },
+        });
+      }
+
+      function move1() {
+        dataSource.entities.remove(dataSource.entities.getById("pointtest3"));
+        var tentity = viewer.entities.removeById("pointtest3");
+        tentity = null;
+        var pathData = [
+          [114.39337388915912, 30.44328162901263, 10],
+          [114.39386122421489, 30.44316766183084, 10],
+          [114.39433466848777, 30.44307630510069, 10],
+          [114.39452027013324, 30.44303323672986, 10],
+          [114.39486324444843, 30.442650043660088, 9],
+          [114.39503225628276, 30.44251410519674, 9],
+          [114.39549512770449, 30.44283433410753, 9],
+          [114.39565949505455, 30.442815836461264, 8],
+          [114.39584459372222, 30.442708156513707, 8],
+          [114.39616288951193, 30.441878577722886, 8],
+        ];
+        var property = new Cesium.SampledPositionProperty();
+        var starttime = new Date();
+        var stoptime;
+        var timestamp = starttime.getTime();
+
+        pathData.forEach((pos, index) => {
+          var time = new Date(timestamp + index * 5000);
+          stoptime = time;
+          var position = Cesium.Cartesian3.fromDegrees(pos[0], pos[1], pos[2]);
+          property.addSample(Cesium.JulianDate.fromDate(time), position);
+        });
+        property.setInterpolationOptions({
+          interpolationDegree: 0.0001,
+          interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
+        });
+
+        var entitydd = dataSource.entities.add({
+          id: "pointtest3",
+          availability: new Cesium.TimeIntervalCollection([
+            new Cesium.TimeInterval({
+              start: Cesium.JulianDate.fromDate(starttime),
+              stop: Cesium.JulianDate.fromDate(new Date(stoptime)),
+            }),
+          ]),
+          position: property, // 点集
+          orientation: new Cesium.VelocityOrientationProperty(property),
+          model: {
+            uri: "./assets/car.gltf",
+            scale: 1,
+            minimumPixelSize: 70,
+          },
+          path: {
+            leadTime: 0,
+            resolution: 1,
+            material: new Cesium.PolylineGlowMaterialProperty({
+              glowPower: 0.1,
+              color: Cesium.Color.GREEN,
+            }),
+            width: 10,
+          },
+        });
+
+        // viewer.zoomTo(entitydd);
+
+        viewer.clock.currentTime = Cesium.JulianDate.fromDate(starttime); //修改时间轴的当前时间
+        viewer.clock.stopTime = Cesium.JulianDate.fromDate(new Date(stoptime));
+        viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
+        viewer.clock.shouldAnimate = true; //开始播放
+      }
+
+      function delete1() {
+        var tempentity = dataSource.entities.getById("pointtest"); //获取entity
+        dataSource.entities.remove(dataSource.entities.getById("pointtest1"));
+        dataSource.entities.remove(dataSource.entities.getById("pointtest2"));
+        dataSource.entities.remove(dataSource.entities.getById("pointtest3"));
+        dataSource.entities.remove(dataSource.entities.getById("circleRipple"));
+        dataSource.entities.remove(dataSource.entities.getById("pointtest5"));
+        var tentity = viewer.entities.removeById("pointtest3");
+        tentity = null;
+      }
+    </script>
+    <div id="div_1"></div>
+    <div id="div_2"></div>
+  </body>
+</html>
